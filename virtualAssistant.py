@@ -53,7 +53,7 @@ def respond(voice_data):
         webbrowser.get().open(url)
     if 'find location' in voice_data:
         location =  record_audio('which location you want to search for')
-        url = f'https://google.nl/maps/place{str(search)}'
+        url = f'https://google.nl/maps/place/{str(location)}'
         webbrowser.get().open(url)
         speak("heres is your location"+str(location)+"&/amp;")
 
@@ -76,8 +76,8 @@ root.configure(background="white")
 root.title("Verna, the Assistant")
 
 #buttons
-task_btn = ttk.Button(root,text="Talk w/ Verna",width=10,command=task).grid(row=0,column=0,ipady=20,ipadx=90)
-save_btn = ttk.Button(root,text="Exit",width=10,command=root.destroy).grid(row=1,column=0,ipady=20,ipadx=90)
+task_btn = ttk.Button(root,text="Talk w/ Verna",command=task,width=50).grid(row=0,column=0,ipady=20,ipadx=90)
+save_btn = ttk.Button(root,text="Exit",command=root.destroy,width=50).grid(row=1,column=0,ipady=20,ipadx=90)
 
 #screen init
 root.mainloop()
