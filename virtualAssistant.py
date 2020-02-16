@@ -3,14 +3,13 @@ from ttkthemes import themed_tk as tk
 from tkinter import ttk
 from time import ctime
 import time
-import speech_recognition as sr 
+import speech_recognition as sr
 import pyaudio
 import webbrowser
 import os
 import playsound
 import random
-from gtts import gTTS 
-
+from gtts import gTTS
 
 #how the verna talks to you
 def speak(audio_string):
@@ -38,10 +37,9 @@ def record_audio(ask=False):
 
         except sr.RequestError:
             speak('Server is Down, sorry')
-        
         return voice_data
 
-#actions 
+#actions
 def respond(voice_data):
     if 'name' in voice_data:
         speak('hi, my name is verna')
@@ -51,12 +49,20 @@ def respond(voice_data):
         search = record_audio('what do you want to search for')
         url = f'https://google.com/search?q={str(search)}'
         webbrowser.get().open(url)
+        speak('ok, searching')
     if 'find location' in voice_data:
         location =  record_audio('which location you want to search for')
         url = f'https://google.nl/maps/place/{str(location)}'
         webbrowser.get().open(url)
         speak("heres is your location"+str(location)+"&/amp;")
-
+    if 'watch' in voice_data:
+        video = record_audio('what do you want to watch')
+        url = f'https://youtube.com/search?q={video}'
+        webbrowser.get().open(url)
+        speak('good choice, opening')
+    if ('calculate' or 'calculator') in voice_data:
+        os.system('calc.exe')
+        speak('opening calculator')
     if 'exit' in voice_data:
         speak('ok bye')
         root.destroy()
@@ -66,11 +72,11 @@ def task():
     speak('can i help you')
     voice_data = record_audio()
     respond(voice_data)
-    
+
 #screen definition
 root = tk.ThemedTk()
 root.get_themes()
-root.set_theme("scidgreen")
+root.set_theme("scidblue")
 root.resizable(100,100)
 root.configure(background="white")
 root.title("Verna, the Assistant")
