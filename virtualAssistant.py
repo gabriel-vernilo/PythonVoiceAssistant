@@ -43,29 +43,38 @@ def record_audio(ask=False):
 def respond(voice_data):
     if 'name' in voice_data:
         speak('hi, my name is verna')
-    if 'current time' in voice_data:
+    elif 'current time' in voice_data:
         speak(ctime())
-    if 'search' in voice_data:
+    elif 'search' in voice_data:
         search = record_audio('what do you want to search for')
         url = f'https://google.com/search?q={str(search)}'
         webbrowser.get().open(url)
-        speak('ok, searching')
-    if 'find location' in voice_data:
+        speak(f'ok, searching for {search}')
+    elif 'find location' in voice_data:
         location =  record_audio('which location you want to search for')
         url = f'https://google.nl/maps/place/{str(location)}'
         webbrowser.get().open(url)
         speak("heres is your location"+str(location)+"&/amp;")
-    if 'watch' in voice_data:
+    elif 'watch' in voice_data:
         video = record_audio('what do you want to watch')
         url = f'https://youtube.com/search?q={video}'
         webbrowser.get().open(url)
         speak('good choice, opening')
-    if ('calculate' or 'calculator') in voice_data:
+    elif ('calculate' or 'calculator') in voice_data:
         os.system('calc.exe')
         speak('opening calculator')
-    if 'exit' in voice_data:
+    elif 'exit' in voice_data:
         speak('ok bye')
         root.destroy()
+    elif 'feeling sad' in voice_data:
+        speak('try watch this')
+        webbrowser.get().open('https://www.youtube.com/watch?v=kdu1BMfL9Vg')
+        speak('or this')
+        webbrowser.get().open('https://www.youtube.com/watch?v=qxJU4PYuNP0')
+        speak('this will work, trust me')
+        webbrowser.get().open('https://www.youtube.com/watch?v=PppkNH3bKV4')
+    else:
+        speak('sorry, did not get that')
 
 #init
 def task():
