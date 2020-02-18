@@ -43,7 +43,7 @@ def record_audio(ask=False):
 def respond(voice_data):
     if 'name' in voice_data:
         speak('hi, my name is verna')
-    elif 'current time' in voice_data:
+    if 'current time' in voice_data:
         speak(ctime())
     elif 'search' in voice_data:
         search = record_audio('what do you want to search for')
@@ -54,7 +54,7 @@ def respond(voice_data):
         location =  record_audio('which location you want to search for')
         url = f'https://google.nl/maps/place/{str(location)}'
         webbrowser.get().open(url)
-        speak("heres is your location"+str(location)+"&/amp;")
+        speak(f"heres is your location {str(location)} ")
     elif 'watch' in voice_data:
         video = record_audio('what do you want to watch')
         url = f'https://youtube.com/search?q={video}'
