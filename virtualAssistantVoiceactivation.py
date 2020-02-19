@@ -12,7 +12,6 @@ import playsound
 import random
 from gtts import gTTS
 
-
 #how the verna talks to you
 def speak(audio_string):
     tts = gTTS(text=audio_string, lang ='en')
@@ -23,7 +22,7 @@ def speak(audio_string):
     playsound.playsound(audio_file)
     os.remove(audio_file)
 
-#recursive, infinite listening
+#how you talks to verna
 def record_audio(ask=False):
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -38,25 +37,6 @@ def record_audio(ask=False):
             record_audio()
         except sr.RequestError:
             speak('Server is Down, sorry')
-        initverna(voice_data)
-        return voice_data
-
-#how you talks to verna
-def record_audio_to_respond(ask=False):
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        if ask:
-            speak(ask)
-
-        audio = r.listen(source)
-        voice_data = ''
-        try:
-            voice_data = r.recognize_google(audio)
-        except sr.UnknownValueError:
-            speak('sorry, did not get that')
-            record_audio()
-        except sr.RequestError:
-            speak('Server is Down, sorry')
         return voice_data
 
 #actions
@@ -66,27 +46,26 @@ def respond(voice_data):
     elif 'current time' in voice_data:
         speak(ctime())
     elif 'search' in voice_data:
-        search = record_audio_to_respond('what do you want to search for')
+        search = record_audio('what do you want to search for')
         url = f'https://google.com/search?q={str(search)}'
         webbrowser.get().open(url)
         speak(f'ok, searching for {search}')
     elif 'find location' in voice_data:
-        location =  record_audio_to_respond('which location you want to search for')
+        location =  record_audio('which location you want to search for')
         url = f'https://google.nl/maps/place/{str(location)}'
         webbrowser.get().open(url)
         speak(f"heres is your location {str(location)} ")
     elif 'watch' in voice_data:
-        video = record_audio_to_respond('what do you want to watch')
+        video = record_audio('what do you want to watch')
         url = f'https://youtube.com/search?q={video}'
         webbrowser.get().open(url)
         speak('good choice, opening')
-    elif ('calculate' or 'calculator') in voice_data:
+    elif 'calculate' in voice_data:
         os.system('calc.exe')
         speak('opening calculator')
     elif 'exit' in voice_data:
         speak('ok bye')
         sys.exit()
-        root.destroy()
     elif 'feeling sad' in voice_data:
         speak('try watch this')
         webbrowser.get().open('https://www.youtube.com/watch?v=kdu1BMfL9Vg')
@@ -94,14 +73,17 @@ def respond(voice_data):
         webbrowser.get().open('https://www.youtube.com/watch?v=qxJU4PYuNP0')
         speak('this will work, trust me')
         webbrowser.get().open('https://www.youtube.com/watch?v=PppkNH3bKV4')
+    elif 'shutdown' in voice_data:
+        speak('turning your computer off')
+        os.system("shutdown /s /t 10")
     else:
         speak('sorry, did not get that')
-    time.sleep(3)
     record_audio()
+
 #init
 def task():
     speak('can i help you')
-    voice_data = record_audio_to_respond()
+    voice_data = record_audio()
     respond(voice_data)
 
 #check if you say "hello assistant"
@@ -111,5 +93,7 @@ def initverna(voice_data):
     else:
         record_audio()
 
-#start recursion
-record_audio()
+#always listening
+while True:
+    voice_data = record_audio()
+    initverna(voice_data)
