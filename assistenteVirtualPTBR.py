@@ -13,7 +13,7 @@ from gtts import gTTS
 
 #como a Verna fala com você
 def speak(audio_string):
-    tts = gTTS(text=audio_string, Language='pt-br')
+    tts = gTTS(text=audio_string, lang='pt-br')
 
     r = random.randint(1,1000000)
     audio_file = f'audio-{str(r)}.mp3'
