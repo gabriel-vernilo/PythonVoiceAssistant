@@ -19,7 +19,7 @@ if you download "virtualAssistantVoiceactivation.exe" : say "assistent" to activ
 ![as_en_btn](https://user-images.githubusercontent.com/53917092/79047147-51e95a80-7beb-11ea-8d87-02bd9c204bc3.png)
 
 if you are using Linux or Mac Os install is the same process but you but you have to make sure you have python3 with pip3 installed
-in the terminal using the command """pip3 install -r requirements.txt""" you install the required libs
+in the terminal using the command "pip3 install -r requirements.txt" you install the required libs
 
 now run the .py file 
 
